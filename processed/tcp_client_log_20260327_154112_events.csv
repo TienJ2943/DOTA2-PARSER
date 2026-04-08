@@ -1,0 +1,158 @@
+timestamp,logger,category,event_type,command_text,mode,cycle,team,server_ip,server_port,latency_ms,duration_sec,status,response,message
+2026-03-27 15:41:12.497,tcp_client,session,log_file_name,,,,,,,,,,,Log file name: tcp_client_log_20260327_154112.txt
+2026-03-27 15:41:12.498,tcp_client,session,log_file_path,,,,,,,,,,,Log file path: /home/dota/team_scripts/tcp_connection_v1/tcp_client_log_20260327_154112.txt
+2026-03-27 15:41:12.498,tcp_client,session,controller_start,,,,,,,,,,,"Controller starting: client_name=oaserver, default_server_port=5000, connect_timeout=5.0, targets=['172.19.123.153', '172.19.126.210', '172.19.143.198']"
+2026-03-27 15:41:12.498,tcp_client,connection,connecting_to_servers,,,,,,,,,,,Connecting to servers:
+,,other,unparsed,,,,,,,,,,,"[2026-03-27 15:41:12.517]   ✅ 172.19.123.153:5000  (# 1, Team A)"
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:17.522]   ❌ 172.19.126.210:5000  (timed out)
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.529]   ❌ 172.19.143.198:5000  (timed out)
+2026-03-27 15:41:22.529,tcp_client,other,generic,,,,,,,,,,,Commands (latency commands apply to ALL connected servers unless noted):
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.529]   servers                           -> list connected servers (with Team A/B + numbers)
+,,other,unparsed,,,,,,,,,,,"[2026-03-27 15:41:22.530]   connect to <ip1>, <ip2>, ...      -> connect/reconnect to new servers"
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.530]   delete <number>                   -> delete server + renumber
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.530]   move <number> to A|B              -> move a server to another team
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.530]   swap <n1> <n2>                    -> swap teams of two servers (example: swap 2 7)
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.530]   set <ms>                          -> send SET_LATENCY <ms> to ALL servers
+,,other,unparsed,,,,,,,,,,,"[2026-03-27 15:41:22.530]   start_latency_loop                -> prompt duration + 4 latency values, then loop forever (ALL servers)"
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.530]   start_latency_loop <mm:ss|sec> <lat1> <lat2> <lat3> <lat4>
+,,other,unparsed,,,,,,,,,,,"[2026-03-27 15:41:22.530]                                     -> same as above, but no prompts"
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.530]   start_exp baseline
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.530]                                     -> obs all on + input on + keep both teams at baseline (STOP on all servers)
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.530]   start_exp shuffle <mm:ss|sec> <array_no>
+,,other,unparsed,,,,,,,,,,,"[2026-03-27 15:41:22.530]                                     -> obs all on + input on + for each latency value, Team A then Team B take turns"
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.530]                                     -> example: start_exp shuffle 300 1
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.530]   start_exp default <mm:ss|sec> <array_no> <team> [team]
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.530]                                     -> obs all on + input on + each listed team runs the full latency array in order
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.530]                                     -> example: start_exp default 300 2 A
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.530]                                     -> example: start_exp default 300 1 A B
+,,other,unparsed,,,,,,,,,,,"[2026-03-27 15:41:22.530]   stop                              -> stop current loop; if experiment is running, also OBS_OFF_ALL + INPUT_OFF"
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.530]   ping                              -> send PING to ALL servers
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.530]   obs <ip> on [match]               -> start OBS recording on ONE server (server host == <ip>)
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.530]   obs <ip> off                      -> stop OBS recording on ONE server (server host == <ip>)
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.531]   obs all on [match]                -> send OBS_ON_ALL to ALL servers
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.531]   obs all off                       -> send OBS_OFF_ALL to ALL servers
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:41:22.531]   input on/off                      -> send INPUT_ON / INPUT_OFF to ALL servers
+,,other,unparsed,,,,,,,,,,,"[2026-03-27 15:41:22.531]   quit                              -> stop schedule/experiment, cleanup if needed, then send QUIT"
+2026-03-27 15:41:22.531,tcp_client,other,generic,,,,,,,,,,,Experiment latency arrays:
+,,other,unparsed,,,,,,,,,,,"[2026-03-27 15:41:22.531]   Array 1: [18, 41, 67, 24, 93, 56, 32]"
+,,other,unparsed,,,,,,,,,,,"[2026-03-27 15:41:22.531]   Array 2: [20, 40, 60, 80, 100]"
+,,other,unparsed,,,,,,,,,,,"[2026-03-27 15:41:22.531]   Array 3: [95, 21, 47, 63, 10, 88, 52]"
+,,other,unparsed,,,,,,,,,,,"[2026-03-27 15:41:22.531]   Array 4: [31, 76, 14, 65, 99, 40, 22]"
+,,other,unparsed,,,,,,,,,,,"[2026-03-27 15:41:22.531]   Array 5: [57, 11, 83, 29, 71, 44, 97]"
+2026-03-27 15:42:52.253,tcp_client,command,user_command,connect to 172.19.126.210 172.19.143.198,,,,,,,,,,User command: connect to 172.19.126.210 172.19.143.198
+2026-03-27 15:42:52.253,tcp_client,connection,connecting_to_servers,,,,,,,,,,,Connecting to servers:
+,,other,unparsed,,,,,,,,,,,"[2026-03-27 15:42:52.258]   ✅ 172.19.126.210:5000  (# 2, Team A)"
+,,other,unparsed,,,,,,,,,,,"[2026-03-27 15:42:52.278]   ✅ 172.19.143.198:5000  (# 3, Team A)"
+2026-03-27 15:42:52.279,tcp_client,team_state,connected_servers_header,,,,,,,,,,,Connected servers by team:
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:42:52.279]   Team A (3/5):
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:42:52.279]      1) 172.19.123.153:5000
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:42:52.279]      2) 172.19.126.210:5000
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:42:52.279]      3) 172.19.143.198:5000
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:42:52.279]   Team B (0/5):
+2026-03-27 15:42:52.279,tcp_client,other,generic,,,,,,,,,,,Server management commands:
+,,other,unparsed,,,,,,,,,,,"[2026-03-27 15:42:52.279]   connect to <ip1>, <ip2>, ...  -> connect/reconnect to more servers"
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:42:52.279]   delete <number>               -> remove server + renumber 1..N
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:42:52.280]   move <number> to A|B          -> move one server to another team
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:42:52.280]   swap <n1> <n2>                -> swap teams of two servers (like swap 2 7)
+2026-03-27 15:43:56.510,tcp_client,command,user_command,move 1 to B,,,,,,,,,,User command: move 1 to B
+2026-03-27 15:43:56.515,tcp_client,team_state,moved_server,,,,B,,,,,,,Moved server #1 to Team B.
+2026-03-27 15:43:56.515,tcp_client,team_state,connected_servers_header,,,,,,,,,,,Connected servers by team:
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:43:56.516]   Team A (2/5):
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:43:56.516]      2) 172.19.126.210:5000
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:43:56.517]      3) 172.19.143.198:5000
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:43:56.517]   Team B (1/5):
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:43:56.518]      1) 172.19.123.153:5000
+2026-03-27 15:43:56.521,tcp_client,other,generic,,,,,,,,,,,Server management commands:
+,,other,unparsed,,,,,,,,,,,"[2026-03-27 15:43:56.523]   connect to <ip1>, <ip2>, ...  -> connect/reconnect to more servers"
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:43:56.523]   delete <number>               -> remove server + renumber 1..N
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:43:56.524]   move <number> to A|B          -> move one server to another team
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:43:56.524]   swap <n1> <n2>                -> swap teams of two servers (like swap 2 7)
+2026-03-27 15:48:31.053,tcp_client,command,user_command,start_exp shuffle 300 2,,,,,,,,,,User command: start_exp shuffle 300 2
+2026-03-27 15:48:31.058,tcp_client,experiment,experiment_setup,,shuffle,,,,,,300.0,,,"Starting experiment setup: mode=shuffle, duration=300.0, latency_values=[20, 40, 60, 80, 100], teams=['A', 'B']"
+2026-03-27 15:48:31.060,tcp_client,experiment,experiment_setup_actions,,shuffle,,,,,,,,,Starting experiment setup: STOP + OBS_ON_ALL + INPUT_ON
+2026-03-27 15:48:31.091,tcp_server:172.19.123.153:5000,other,generic,,shuffle,,,,,,,,,OK latency injector stopped
+2026-03-27 15:48:31.091,tcp_server:172.19.126.210:5000,other,generic,,shuffle,,,,,,,,,OK latency injector stopped
+2026-03-27 15:48:31.092,tcp_server:172.19.143.198:5000,other,generic,,shuffle,,,,,,,,,OK latency injector stopped
+2026-03-27 15:48:31.347,tcp_server:172.19.123.153:5000,other,generic,,shuffle,,,,,,,,,OK OBS started for all IPs
+2026-03-27 15:48:31.349,tcp_server:172.19.126.210:5000,other,generic,,shuffle,,,,,,,,,OK OBS started for all IPs
+2026-03-27 15:48:31.349,tcp_server:172.19.143.198:5000,other,generic,,shuffle,,,,,,,,,OK OBS started for all IPs
+2026-03-27 15:48:36.405,tcp_server:172.19.123.153:5000,other,generic,,shuffle,,,,,,,,,OK app started
+2026-03-27 15:48:36.406,tcp_server:172.19.126.210:5000,other,generic,,shuffle,,,,,,,,,OK app started
+2026-03-27 15:48:36.406,tcp_server:172.19.143.198:5000,other,generic,,shuffle,,,,,,,,,OK app started
+2026-03-27 15:48:36.413,tcp_client,experiment,experiment_start,,shuffle,,,,,,300.0,,,"EXPERIMENT START | mode=shuffle | duration_sec=300.0 | latency_values=[20, 40, 60, 80, 100] | teams=['A', 'B']"
+2026-03-27 15:48:36.413,tcp_client,experiment,experiment_mode_started,,shuffle,,,,,,,,,Experiment mode started: shuffle.
+2026-03-27 15:48:36.413,tcp_client,experiment,team_order,,shuffle,,,,,,,,,"Team order per latency value: ['A', 'B']"
+2026-03-27 15:48:36.413,tcp_client,experiment,team_alternation,,shuffle,,,,,,,,,Team A and Team B will alternate on each latency value.
+2026-03-27 15:48:36.413,tcp_client,experiment,duration_per_latency,,shuffle,,,,,,300.0,,,Duration per latency value: 300.0 sec
+2026-03-27 15:48:36.413,tcp_client,experiment,latency_sequence,,shuffle,,,,,,,,,"Latency sequence: [20, 40, 60, 80, 100]"
+2026-03-27 15:48:36.413,tcp_client,experiment,stop_hint,,shuffle,,,,,,,,,Type 'stop' to stop experiment.
+2026-03-27 15:48:36.413,tcp_client,experiment,experiment_cycle_start,,shuffle,1,,,,,,,,EXPERIMENT CYCLE START | cycle=1 | mode=shuffle
+2026-03-27 15:53:36.536,tcp_client,command,user_command,stop,shuffle,1,,,,,,,,User command: stop
+2026-03-27 15:53:36.537,tcp_client,command,stop_requested,,shuffle,1,,,,,,,,Stop requested by user.
+2026-03-27 15:53:36.538,tcp_client,experiment,experiment_cycle_end,,shuffle,1,,,,,,,,EXPERIMENT CYCLE END | cycle=1 | mode=shuffle
+2026-03-27 15:53:36.538,tcp_client,experiment,experiment_end,,shuffle,1,,,,,,,,EXPERIMENT END | mode=shuffle
+2026-03-27 15:53:36.538,tcp_client,experiment,experiment_stopped,,shuffle,1,,,,,,,,Experiment stopped.
+2026-03-27 15:53:36.539,tcp_client,experiment,cleanup_resources,,shuffle,1,,,,,,,,Cleaning up experiment resources...
+2026-03-27 15:53:36.814,tcp_server:172.19.123.153:5000,other,generic,,shuffle,1,,,,,,,,OK OBS stopped for all IPs
+2026-03-27 15:53:36.814,tcp_server:172.19.126.210:5000,other,generic,,shuffle,1,,,,,,,,OK OBS stopped for all IPs
+2026-03-27 15:53:36.814,tcp_server:172.19.143.198:5000,other,generic,,shuffle,1,,,,,,,,OK OBS stopped for all IPs
+2026-03-27 15:53:36.934,tcp_server:172.19.123.153:5000,other,generic,,shuffle,1,,,,,,,,OK app stopped
+2026-03-27 15:53:36.934,tcp_server:172.19.126.210:5000,other,generic,,shuffle,1,,,,,,,,OK app stopped
+2026-03-27 15:53:36.934,tcp_server:172.19.143.198:5000,other,generic,,shuffle,1,,,,,,,,OK app stopped
+2026-03-27 15:53:37.172,tcp_server:172.19.123.153:5000,other,generic,,shuffle,1,,,,,,,,OK latency injector stopped
+2026-03-27 15:53:37.173,tcp_server:172.19.126.210:5000,other,generic,,shuffle,1,,,,,,,,OK latency injector stopped
+2026-03-27 15:53:37.173,tcp_server:172.19.143.198:5000,other,generic,,shuffle,1,,,,,,,,OK latency injector stopped
+2026-03-27 15:54:34.121,tcp_client,command,user_command,servers,shuffle,1,,,,,,,,User command: servers
+2026-03-27 15:54:34.126,tcp_client,team_state,connected_servers_header,,shuffle,1,,,,,,,,Connected servers by team:
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:54:34.126]   Team A (2/5):
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:54:34.126]      2) 172.19.126.210:5000
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:54:34.126]      3) 172.19.143.198:5000
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:54:34.126]   Team B (1/5):
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:54:34.127]      1) 172.19.123.153:5000
+2026-03-27 15:54:34.127,tcp_client,other,generic,,shuffle,1,,,,,,,,Server management commands:
+,,other,unparsed,,,,,,,,,,,"[2026-03-27 15:54:34.127]   connect to <ip1>, <ip2>, ...  -> connect/reconnect to more servers"
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:54:34.127]   delete <number>               -> remove server + renumber 1..N
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:54:34.129]   move <number> to A|B          -> move one server to another team
+,,other,unparsed,,,,,,,,,,,[2026-03-27 15:54:34.129]   swap <n1> <n2>                -> swap teams of two servers (like swap 2 7)
+2026-03-27 15:57:12.697,tcp_client,command,user_command,start_exp shuffle 300 2,shuffle,1,,,,,,,,User command: start_exp shuffle 300 2
+2026-03-27 15:57:12.707,tcp_client,experiment,experiment_setup,,shuffle,1,,,,,300.0,,,"Starting experiment setup: mode=shuffle, duration=300.0, latency_values=[20, 40, 60, 80, 100], teams=['A', 'B']"
+2026-03-27 15:57:12.707,tcp_client,experiment,experiment_setup_actions,,shuffle,1,,,,,,,,Starting experiment setup: STOP + OBS_ON_ALL + INPUT_ON
+2026-03-27 15:57:12.771,tcp_server:172.19.123.153:5000,other,generic,,shuffle,1,,,,,,,,OK latency injector stopped
+2026-03-27 15:57:12.772,tcp_server:172.19.126.210:5000,other,generic,,shuffle,1,,,,,,,,OK latency injector stopped
+2026-03-27 15:57:12.772,tcp_server:172.19.143.198:5000,other,generic,,shuffle,1,,,,,,,,OK latency injector stopped
+2026-03-27 15:57:12.813,tcp_server:172.19.123.153:5000,other,generic,,shuffle,1,,,,,,,,OK OBS started for all IPs
+2026-03-27 15:57:12.813,tcp_server:172.19.126.210:5000,other,generic,,shuffle,1,,,,,,,,OK OBS started for all IPs
+2026-03-27 15:57:12.815,tcp_server:172.19.143.198:5000,other,generic,,shuffle,1,,,,,,,,OK OBS started for all IPs
+2026-03-27 15:57:13.533,tcp_server:172.19.123.153:5000,other,generic,,shuffle,1,,,,,,,,OK app started
+2026-03-27 15:57:13.533,tcp_server:172.19.126.210:5000,other,generic,,shuffle,1,,,,,,,,OK app started
+2026-03-27 15:57:13.534,tcp_server:172.19.143.198:5000,other,generic,,shuffle,1,,,,,,,,OK app started
+2026-03-27 15:57:13.541,tcp_client,experiment,experiment_start,,shuffle,1,,,,,300.0,,,"EXPERIMENT START | mode=shuffle | duration_sec=300.0 | latency_values=[20, 40, 60, 80, 100] | teams=['A', 'B']"
+2026-03-27 15:57:13.541,tcp_client,experiment,experiment_mode_started,,shuffle,1,,,,,,,,Experiment mode started: shuffle.
+2026-03-27 15:57:13.542,tcp_client,experiment,team_order,,shuffle,1,,,,,,,,"Team order per latency value: ['A', 'B']"
+2026-03-27 15:57:13.545,tcp_client,experiment,team_alternation,,shuffle,1,,,,,,,,Team A and Team B will alternate on each latency value.
+2026-03-27 15:57:13.545,tcp_client,experiment,duration_per_latency,,shuffle,1,,,,,300.0,,,Duration per latency value: 300.0 sec
+2026-03-27 15:57:13.545,tcp_client,experiment,latency_sequence,,shuffle,1,,,,,,,,"Latency sequence: [20, 40, 60, 80, 100]"
+2026-03-27 15:57:13.545,tcp_client,experiment,stop_hint,,shuffle,1,,,,,,,,Type 'stop' to stop experiment.
+2026-03-27 15:57:13.545,tcp_client,experiment,experiment_cycle_start,,shuffle,1,,,,,,,,EXPERIMENT CYCLE START | cycle=1 | mode=shuffle
+2026-03-27 16:31:14.812,tcp_client,command,user_command,stop,shuffle,1,,,,,,,,User command: stop
+2026-03-27 16:31:14.813,tcp_client,command,stop_requested,,shuffle,1,,,,,,,,Stop requested by user.
+2026-03-27 16:31:14.814,tcp_client,experiment,experiment_cycle_end,,shuffle,1,,,,,,,,EXPERIMENT CYCLE END | cycle=1 | mode=shuffle
+2026-03-27 16:31:14.814,tcp_client,experiment,experiment_end,,shuffle,1,,,,,,,,EXPERIMENT END | mode=shuffle
+2026-03-27 16:31:14.814,tcp_client,experiment,experiment_stopped,,shuffle,1,,,,,,,,Experiment stopped.
+2026-03-27 16:31:14.815,tcp_client,experiment,cleanup_resources,,shuffle,1,,,,,,,,Cleaning up experiment resources...
+2026-03-27 16:31:15.022,tcp_server:172.19.123.153:5000,other,generic,,shuffle,1,,,,,,,,OK OBS stopped for all IPs
+2026-03-27 16:31:15.023,tcp_server:172.19.126.210:5000,other,generic,,shuffle,1,,,,,,,,OK OBS stopped for all IPs
+2026-03-27 16:31:15.023,tcp_server:172.19.143.198:5000,other,generic,,shuffle,1,,,,,,,,OK OBS stopped for all IPs
+2026-03-27 16:31:15.065,tcp_server:172.19.123.153:5000,other,generic,,shuffle,1,,,,,,,,OK app stopped
+2026-03-27 16:31:15.065,tcp_server:172.19.126.210:5000,other,generic,,shuffle,1,,,,,,,,OK app stopped
+2026-03-27 16:31:15.065,tcp_server:172.19.143.198:5000,other,generic,,shuffle,1,,,,,,,,OK app stopped
+2026-03-27 16:31:15.145,tcp_server:172.19.123.153:5000,other,generic,,shuffle,1,,,,,,,,OK latency injector stopped
+2026-03-27 16:31:15.145,tcp_server:172.19.126.210:5000,other,generic,,shuffle,1,,,,,,,,OK latency injector stopped
+2026-03-27 16:31:15.147,tcp_server:172.19.143.198:5000,other,generic,,shuffle,1,,,,,,,,OK latency injector stopped
+2026-03-27 16:32:25.323,tcp_client,command,user_command,quit,shuffle,1,,,,,,,,User command: quit
+2026-03-27 16:32:25.323,tcp_client,command,quit_requested,,shuffle,1,,,,,,,,Quit requested by user.
+2026-03-27 16:32:25.324,tcp_client,command,schedule_not_running,,shuffle,1,,,,,,,,Schedule is not running.
+2026-03-27 16:32:25.685,tcp_server:172.19.123.153:5000,other,generic,,shuffle,1,,,,,,,,OK bye
+2026-03-27 16:32:25.686,tcp_server:172.19.126.210:5000,other,generic,,shuffle,1,,,,,,,,OK bye
+2026-03-27 16:32:25.686,tcp_server:172.19.143.198:5000,other,generic,,shuffle,1,,,,,,,,OK bye
+2026-03-27 16:32:25.688,tcp_client,session,process_exiting,,shuffle,1,,,,,,,,Process exiting.
