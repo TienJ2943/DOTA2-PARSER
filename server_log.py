@@ -1,51 +1,37 @@
 import csv
-from datetime import date
 import re
 import sys
 from pathlib import Path
 
 
+# Real server-log top-level format:
+# 2026-04-07 16:18:26 message...
 LOG_RE = re.compile(
-    r'^L\s+(?P<date>\d{2}/\d{2}/\d{4})\s+-\s+(?P<time>\d{2}:\d{2}:\d{2}):\s+(?P<message>.*)$'
+    r"^(?P<date>\d{4}-\d{2}-\d{2})\s+(?P<time>\d{2}:\d{2}:\d{2})\s+(?P<message>.*)$"
 )
 
-# Adjust these patterns to your exact server log format
-PATTERNS = [
-    # Example:
-    # Player connected: name=Minh, steamid=7656119..., ip=138.25.4.57, hero=npc_dota_hero_nevermore, team=RADIANT
-        (
-            "identity_bot",
-            re.compile(
-                r'"(?P<userid>\d+):[^:]+:(?P<name>[^<]+)<(?P<slot>\d+)><><>" connected, address "(?P<ip>[^"]+)"'
-            )
-        ),
+# Real useful line families seen in your logs
+RE_STEAM_NET = re.compile(
+    r"steamid:(?P<steamid>\d+)@(?P<ip>\d{1,3}(?:\.\d{1,3}){3})(?::(?P<port>\d+))?\s+'(?P<steam_name>[^']+)'"
+)
 
+RE_PLAYER_ACCOUNT = re.compile(
+    r"Player\s+(?P<steamid>\d+)\s+Account\s+(?P<account_id>\d+)\s+TotalGold\s*="
+)
 
-    # Example:
-    # steamid=7656119... name=Minh ip=138.25.4.57 hero=npc_dota_hero_nevermore
-    (
-        "player_identity_alt",
-        re.compile(
-            r"^steamid=(?P<steamid>\d+)\s+"
-            r"name=(?P<steam_name>.*?)\s+"
-            r"ip=(?P<ip>\d{1,3}(?:\.\d{1,3}){3})\s+"
-            r"hero=(?P<hero_name>npc_dota_hero_[a-zA-Z0-9_]+)"
-            r"(?:\s+team=(?P<team>[A-Z]+))?$"
-        )
-    ),
+RE_HERO_ACCOUNT = re.compile(
+    r"(?P<hero_name>[a-zA-Z0-9_]+)\s*-\s*(?P<account_id>\d+)\s*-\s*Predicted Rank\s*="
+)
 
-    # Example:
-    # Bot connected: name=Bot_1, ip=127.0.0.1, hero=npc_dota_hero_razor, team=DIRE
-    (
-        "bot_identity",
-        re.compile(
-            r"^Bot connected:\s+name=(?P<steam_name>.*?),\s+"
-            r"ip=(?P<ip>\d{1,3}(?:\.\d{1,3}){3}),\s+"
-            r"hero=(?P<hero_name>npc_dota_hero_[a-zA-Z0-9_]+),\s+"
-            r"team=(?P<team>[A-Z]+)$"
-        )
-    ),
-]
+RE_TEAM_PLAYER_ACCOUNT = re.compile(
+    r"Team\s+(?P<team_num>\d+)\s+Player\s+(?P<team_slot>\d+)\s+m_unAccountID\s*=\s*(?P<steamid>\d+)"
+)
+
+# Optional bot-ish connect lines if present
+RE_BOT_CONNECT = re.compile(
+    r'"(?P<userid>\d+):[^:]+:(?P<steam_name>[^<]+)<(?P<slot>\d+)><><>" connected, address "(?P<ip>[^"]+)"'
+)
+
 
 def norm_hero(name: str) -> str:
     name = (name or "").strip().lower()
@@ -53,80 +39,45 @@ def norm_hero(name: str) -> str:
         name = name[len("npc_dota_hero_"):]
     return name
 
-def load_identity_map_from_server_log(raw_dir: Path):
-    server_log_path = find_latest_server_log(raw_dir)
-    if server_log_path is None:
-        print(f"No server log found in {raw_dir}; continuing without player identity enrichment.")
-        return {}
-
-    print(f"Using server log: {server_log_path.name}")
-
-    identity_rows = extract_player_identity_from_server_log(server_log_path)
-
-    identity_map = {}
-    for row in identity_rows:
-        hero = norm_hero(row.get("hero_name"))
-        if not hero:
-            continue
-        identity_map[hero] = row
-
-    print("IDENTITY MAP SIZE:", len(identity_map))
-    for hero, info in identity_map.items():
-        print("IDENTITY:", hero, info)
-
-    return identity_map
-
-def attach_identity_to_combat_rows(rows, identity_map):
-    for row in rows:
-        actor = norm_hero(row.get("actor", ""))
-        target = norm_hero(row.get("target", ""))
-
-        actor_info = identity_map.get(actor, {})
-        target_info = identity_map.get(target, {})
-
-        row["actor_steamid"] = actor_info.get("steamid", "")
-        row["actor_steam_name"] = actor_info.get("steam_name", "")
-        row["actor_ip"] = actor_info.get("ip", "")
-        row["actor_is_bot"] = actor_info.get("is_bot", "")
-
-        row["target_steamid"] = target_info.get("steamid", "")
-        row["target_steam_name"] = target_info.get("steam_name", "")
-        row["target_ip"] = target_info.get("ip", "")
-        row["target_is_bot"] = target_info.get("is_bot", "")
-
-    return rows
-
-
-def attach_identity_to_economy_rows(rows, identity_map):
-    for row in rows:
-        actor = norm_hero(row.get("actor", ""))
-        actor_info = identity_map.get(actor, {})
-
-        row["actor_steamid"] = actor_info.get("steamid", "")
-        row["actor_steam_name"] = actor_info.get("steam_name", "")
-        row["actor_ip"] = actor_info.get("ip", "")
-        row["actor_is_bot"] = actor_info.get("is_bot", "")
-
-    return rows
-
-def strip_npc_hero_prefix(name: str) -> str:
-    if not name:
-        return ""
-    return re.sub(r"^npc_dota_hero_", "", name)
-
 
 def parse_message(message: str):
-    stripped = message.strip()
-    for event_type, pattern in PATTERNS:
-        m = pattern.match(stripped)
-        if m:
-            return event_type, m.groupdict()
+    """
+    Return (event_type, data_dict) for the real server-log formats.
+    """
+    msg = message.strip()
+
+    m = RE_STEAM_NET.search(msg)
+    if m:
+        return "steam_net_identity", m.groupdict()
+
+    m = RE_PLAYER_ACCOUNT.search(msg)
+    if m:
+        return "player_account_summary", m.groupdict()
+
+    m = RE_HERO_ACCOUNT.search(msg)
+    if m:
+        gd = m.groupdict()
+        gd["hero_name"] = norm_hero(gd["hero_name"])
+        return "hero_account_map", gd
+
+    m = RE_TEAM_PLAYER_ACCOUNT.search(msg)
+    if m:
+        return "team_player_account", m.groupdict()
+
+    m = RE_BOT_CONNECT.search(msg)
+    if m:
+        return "bot_connect", m.groupdict()
+
     return "generic", {}
 
 
 def parse_file(log_path: Path):
-    identity_rows = []
     all_rows = []
+
+    # Intermediate join tables
+    steam_identity_by_steamid = {}   # steamid -> {steamid, steam_name, ip, port}
+    steamid_to_account = {}          # steamid -> account_id
+    account_to_hero = {}             # account_id -> hero_name
 
     with log_path.open("r", encoding="utf-8", errors="replace") as f:
         for raw_line in f:
@@ -136,12 +87,20 @@ def parse_file(log_path: Path):
 
             m = LOG_RE.match(line)
             if not m:
-                if any(k in line.lower() for k in ["steam", "hero", "ip", "client", "player"]):
-                    print("TOP-LEVEL UNPARSED LINE:", line)
                 all_rows.append({
+                    "date": "",
+                    "time": "",
                     "timestamp": "",
-                    "logger": "",
+                    "logger": "server",
                     "event_type": "unparsed",
+                    "steamid": "",
+                    "account_id": "",
+                    "steam_name": "",
+                    "ip": "",
+                    "port": "",
+                    "hero_name": "",
+                    "team": "",
+                    "is_bot": "",
                     "message": line.strip(),
                 })
                 continue
@@ -149,64 +108,106 @@ def parse_file(log_path: Path):
             date_str = m.group("date")
             time_str = m.group("time")
             timestamp = f"{date_str} {time_str}"
-            logger = "server"
             message = m.group("message")
 
             event_type, data = parse_message(message)
-            if event_type == "generic" and any(k in message.lower() for k in ["steam", "hero", "ip", "client", "player"]):
-                print("UNMATCHED SERVER LINE:", message)
 
             row = {
-                "date": m.group("date"),
-                "time": m.group("time"),
-                "timestamp": f"{m.group('date')} {m.group('time')}",
+                "date": date_str,
+                "time": time_str,
+                "timestamp": timestamp,
                 "logger": "server",
                 "event_type": event_type,
                 "steamid": data.get("steamid", ""),
+                "account_id": data.get("account_id", ""),
                 "steam_name": data.get("steam_name", ""),
                 "ip": data.get("ip", ""),
-                "hero_name": strip_npc_hero_prefix(data.get("hero_name", "")),
+                "port": data.get("port", ""),
+                "hero_name": norm_hero(data.get("hero_name", "")),
                 "team": data.get("team", ""),
-                "is_bot": "true" if event_type in {"bot_identity", "identity_bot"} else "false",
+                "is_bot": "true" if event_type == "bot_connect" else "false",
                 "message": message,
-}
-
+            }
             all_rows.append(row)
 
-            if event_type in {"player_identity", "player_identity_alt", "bot_identity", "identity_bot"}:
-                identity_rows.append(row)
+            # Build join tables
+            if event_type == "steam_net_identity":
+                steamid = data.get("steamid", "")
+                if steamid:
+                    existing = steam_identity_by_steamid.get(steamid, {})
+                    merged = {
+                        "steamid": steamid,
+                        "steam_name": data.get("steam_name", "") or existing.get("steam_name", ""),
+                        "ip": data.get("ip", "") or existing.get("ip", ""),
+                        "port": data.get("port", "") or existing.get("port", ""),
+                    }
+                    steam_identity_by_steamid[steamid] = merged
 
+            elif event_type == "player_account_summary":
+                steamid = data.get("steamid", "")
+                account_id = data.get("account_id", "")
+                if steamid and account_id:
+                    steamid_to_account[steamid] = account_id
+
+            elif event_type == "hero_account_map":
+                account_id = data.get("account_id", "")
+                hero_name = norm_hero(data.get("hero_name", ""))
+                if account_id and hero_name:
+                    account_to_hero[account_id] = hero_name
+
+    # Final joined identity rows
+    identity_rows = []
+    for steamid, ident in steam_identity_by_steamid.items():
+        account_id = steamid_to_account.get(steamid, "")
+        hero_name = account_to_hero.get(account_id, "")
+
+        identity_rows.append({
+            "date": "",
+            "time": "",
+            "timestamp": "",
+            "logger": "server",
+            "event_type": "joined_identity",
+            "steamid": steamid,
+            "account_id": account_id,
+            "steam_name": ident.get("steam_name", ""),
+            "ip": ident.get("ip", ""),
+            "port": ident.get("port", ""),
+            "hero_name": hero_name,
+            "team": "",
+            "is_bot": "false",
+            "message": "",
+        })
+
+    identity_rows = dedupe_identity_rows(identity_rows)
     return identity_rows, all_rows
 
 
 def dedupe_identity_rows(rows):
     """
     Keep one best row per hero_name.
-    Prefer rows with steamid and ip populated.
     """
     best = {}
-
     for row in rows:
-        hero = row.get("hero_name", "")
+        hero = norm_hero(row.get("hero_name", ""))
         if not hero:
             continue
 
         score = 0
         if row.get("steamid"):
             score += 2
-        if row.get("ip"):
+        if row.get("account_id"):
             score += 1
         if row.get("steam_name"):
             score += 1
+        if row.get("ip"):
+            score += 1
 
         existing = best.get(hero)
-        if existing is None:
+        if existing is None or score > existing[0]:
+            row["hero_name"] = hero
             best[hero] = (score, row)
-        else:
-            if score > existing[0]:
-                best[hero] = (score, row)
 
-    return [item[1] for item in best.values()]
+    return [v[1] for v in best.values()]
 
 
 def write_csv(path: Path, fieldnames, rows):
@@ -218,7 +219,7 @@ def write_csv(path: Path, fieldnames, rows):
 
 def extract_player_identity_from_server_log(log_path: Path):
     identity_rows, _ = parse_file(log_path)
-    return dedupe_identity_rows(identity_rows)
+    return identity_rows
 
 
 def find_latest_server_log(raw_dir: Path) -> Path | None:
@@ -251,20 +252,28 @@ def main():
 
         prefix = log_path.stem
         identity_rows, all_rows = parse_file(log_path)
-        identity_rows = dedupe_identity_rows(identity_rows)
+
         print("IDENTITY ROWS FOUND:", len(identity_rows))
         for row in identity_rows[:20]:
             print(row)
 
         write_csv(
             processed_dir / f"{prefix}_player_identity.csv",
-            ["date","time","timestamp", "logger", "event_type", "steamid", "steam_name", "ip", "hero_name", "team", "is_bot", "message"],
+            [
+                "date", "time", "timestamp", "logger", "event_type",
+                "steamid", "account_id", "steam_name", "ip", "port",
+                "hero_name", "team", "is_bot", "message"
+            ],
             identity_rows,
         )
 
         write_csv(
             processed_dir / f"{prefix}_events.csv",
-            ["date","time","timestamp", "logger", "event_type", "steamid", "steam_name", "ip", "hero_name", "team", "is_bot", "message"],
+            [
+                "date", "time", "timestamp", "logger", "event_type",
+                "steamid", "account_id", "steam_name", "ip", "port",
+                "hero_name", "team", "is_bot", "message"
+            ],
             all_rows,
         )
 
