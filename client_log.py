@@ -318,9 +318,9 @@ def main():
     if len(sys.argv) >= 2:
         log_files = [Path(sys.argv[1])]
     else:
-        log_files = sorted(raw_dir.glob("*.txt"))
+        log_files = sorted(raw_dir.glob("tcp_client_log_*.txt")) + sorted(raw_dir.glob("tcp_client_log_*.log"))
         if not log_files:
-            print(f"No .txt files found in {raw_dir}")
+            print(f"No .txt or .log files found in {raw_dir}")
             sys.exit(0)
 
     for log_path in log_files:

@@ -3,7 +3,10 @@ from datetime import datetime
 import re
 from server_log import extract_player_identity_from_server_log, find_latest_server_log
 
-from client_log import extract_latency_intervals_from_log
+from client_log import (
+    parse_file as parse_client_log,
+    build_latency_intervals,
+)
 from combatlog import parse_file as parse_combatlog, write_csv
 
 def load_identity_map_from_server_log(raw_dir: Path):
@@ -128,7 +131,37 @@ def main():
     print(f"Using tcp log: {tcp_log_path.name}")
 
     # Build latency intervals directly in memory
-    latency_intervals = extract_latency_intervals_from_log(tcp_log_path)
+    tcp_events, tcp_latency_rows, tcp_server_rows = parse_client_log(tcp_log_path)
+    latency_intervals = build_latency_intervals(tcp_latency_rows)
+
+    tcp_stem = tcp_log_path.stem
+    write_csv(
+        processed_dir / f"{tcp_stem}_events.csv",
+        ["timestamp", "logger", "category", "event_type", "command_text",
+        "mode", "cycle", "team", "server_ip", "server_port",
+        "latency_ms", "duration_sec", "status", "response", "message"],
+        tcp_events,
+    )
+
+    write_csv(
+        processed_dir / f"{tcp_stem}_latency_timeline.csv",
+        ["timestamp", "logger", "event_type", "mode", "cycle", "team",
+        "latency_ms", "duration_sec", "status", "latency_values", "teams", "message"],
+        tcp_latency_rows,
+    )
+
+    write_csv(
+        processed_dir / f"{tcp_stem}_server_actions.csv",
+        ["timestamp", "logger", "event_type", "server_ip", "server_port",
+        "team", "command", "latency_ms", "response", "message"],
+        tcp_server_rows,
+    )
+
+    write_csv(
+        processed_dir / f"{tcp_stem}_latency_intervals.csv",
+        ["team", "latency_ms", "start_time", "end_time", "duration_sec", "status", "mode", "cycle"],
+        latency_intervals,
+    )
 
     # Dynamically extract experiment start time from tcp log
     experiment_anchor_dt = extract_experiment_anchor_from_tcp_log(tcp_log_path)
