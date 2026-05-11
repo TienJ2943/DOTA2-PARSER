@@ -1,0 +1,57 @@
+timestamp,logger,event_type,server_ip,server_port,team,command,latency_ms,response,message
+2026-04-08 15:12:20.844,tcp_client,server_stop_inactive,172.19.126.193,5000,,STOP,,OK latency injector stopped,(172.19.126.193:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:12:20.844,tcp_client,server_stop_inactive,172.19.142.242,5000,,STOP,,OK latency injector stopped,(172.19.142.242:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:12:20.945,tcp_client,server_set_latency,172.19.123.40,5000,A,SET_LATENCY,20,OK latency set to 20 ms,(172.19.123.40:5000) [Team A] SET_LATENCY 20 -> OK latency set to 20 ms
+2026-04-08 15:12:20.945,tcp_client,server_set_latency,172.19.139.77,5000,A,SET_LATENCY,20,OK latency set to 20 ms,(172.19.139.77:5000) [Team A] SET_LATENCY 20 -> OK latency set to 20 ms
+2026-04-08 15:17:20.971,tcp_client,server_stop_inactive,172.19.142.242,5000,,STOP,,OK latency injector stopped,(172.19.142.242:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:17:20.971,tcp_client,server_stop_inactive,172.19.123.40,5000,,STOP,,OK latency injector stopped,(172.19.123.40:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:17:21.107,tcp_client,server_set_latency,172.19.139.77,5000,B,SET_LATENCY,20,OK latency set to 20 ms,(172.19.139.77:5000) [Team B] SET_LATENCY 20 -> OK latency set to 20 ms
+2026-04-08 15:17:21.108,tcp_client,server_set_latency,172.19.126.193,5000,B,SET_LATENCY,20,OK latency set to 20 ms,(172.19.126.193:5000) [Team B] SET_LATENCY 20 -> OK latency set to 20 ms
+2026-04-08 15:23:09.898,tcp_client,server_stop_inactive,172.19.139.77,5000,,STOP,,OK latency injector stopped,(172.19.139.77:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:23:09.898,tcp_client,server_stop_inactive,172.19.126.193,5000,,STOP,,OK latency injector stopped,(172.19.126.193:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:23:10.024,tcp_client,server_set_latency,172.19.123.40,5000,A,SET_LATENCY,20,OK latency set to 20 ms,(172.19.123.40:5000) [Team A] SET_LATENCY 20 -> OK latency set to 20 ms
+2026-04-08 15:23:10.024,tcp_client,server_set_latency,172.19.142.242,5000,A,SET_LATENCY,20,OK latency set to 20 ms,(172.19.142.242:5000) [Team A] SET_LATENCY 20 -> OK latency set to 20 ms
+2026-04-08 15:28:10.063,tcp_client,server_stop_inactive,172.19.123.40,5000,,STOP,,OK latency injector stopped,(172.19.123.40:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:28:10.064,tcp_client,server_stop_inactive,172.19.142.242,5000,,STOP,,OK latency injector stopped,(172.19.142.242:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:28:10.099,tcp_client,server_set_latency,172.19.139.77,5000,B,SET_LATENCY,20,OK latency set to 20 ms,(172.19.139.77:5000) [Team B] SET_LATENCY 20 -> OK latency set to 20 ms
+2026-04-08 15:28:10.102,tcp_client,server_set_latency,172.19.126.193,5000,B,SET_LATENCY,20,OK latency set to 20 ms,(172.19.126.193:5000) [Team B] SET_LATENCY 20 -> OK latency set to 20 ms
+2026-04-08 15:33:10.122,tcp_client,server_stop_inactive,172.19.139.77,5000,,STOP,,OK latency injector stopped,(172.19.139.77:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:33:10.122,tcp_client,server_stop_inactive,172.19.126.193,5000,,STOP,,OK latency injector stopped,(172.19.126.193:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:33:10.163,tcp_client,server_set_latency,172.19.123.40,5000,A,SET_LATENCY,40,OK latency set to 40 ms,(172.19.123.40:5000) [Team A] SET_LATENCY 40 -> OK latency set to 40 ms
+2026-04-08 15:33:10.163,tcp_client,server_set_latency,172.19.142.242,5000,A,SET_LATENCY,40,OK latency set to 40 ms,(172.19.142.242:5000) [Team A] SET_LATENCY 40 -> OK latency set to 40 ms
+2026-04-08 15:38:10.195,tcp_client,server_stop_inactive,172.19.123.40,5000,,STOP,,OK latency injector stopped,(172.19.123.40:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:38:10.196,tcp_client,server_stop_inactive,172.19.142.242,5000,,STOP,,OK latency injector stopped,(172.19.142.242:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:38:10.225,tcp_client,server_set_latency,172.19.126.193,5000,B,SET_LATENCY,40,OK latency set to 40 ms,(172.19.126.193:5000) [Team B] SET_LATENCY 40 -> OK latency set to 40 ms
+2026-04-08 15:38:10.226,tcp_client,server_set_latency,172.19.139.77,5000,B,SET_LATENCY,40,OK latency set to 40 ms,(172.19.139.77:5000) [Team B] SET_LATENCY 40 -> OK latency set to 40 ms
+2026-04-08 15:43:10.274,tcp_client,server_stop_inactive,172.19.139.77,5000,,STOP,,OK latency injector stopped,(172.19.139.77:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:43:10.274,tcp_client,server_stop_inactive,172.19.126.193,5000,,STOP,,OK latency injector stopped,(172.19.126.193:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:43:10.300,tcp_client,server_set_latency,172.19.123.40,5000,A,SET_LATENCY,60,OK latency set to 60 ms,(172.19.123.40:5000) [Team A] SET_LATENCY 60 -> OK latency set to 60 ms
+2026-04-08 15:43:10.300,tcp_client,server_set_latency,172.19.142.242,5000,A,SET_LATENCY,60,OK latency set to 60 ms,(172.19.142.242:5000) [Team A] SET_LATENCY 60 -> OK latency set to 60 ms
+2026-04-08 15:48:10.354,tcp_client,server_stop_inactive,172.19.123.40,5000,,STOP,,OK latency injector stopped,(172.19.123.40:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:48:10.354,tcp_client,server_stop_inactive,172.19.142.242,5000,,STOP,,OK latency injector stopped,(172.19.142.242:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:48:10.385,tcp_client,server_set_latency,172.19.126.193,5000,B,SET_LATENCY,60,OK latency set to 60 ms,(172.19.126.193:5000) [Team B] SET_LATENCY 60 -> OK latency set to 60 ms
+2026-04-08 15:48:10.385,tcp_client,server_set_latency,172.19.139.77,5000,B,SET_LATENCY,60,OK latency set to 60 ms,(172.19.139.77:5000) [Team B] SET_LATENCY 60 -> OK latency set to 60 ms
+2026-04-08 15:53:10.433,tcp_client,server_stop_inactive,172.19.139.77,5000,,STOP,,OK latency injector stopped,(172.19.139.77:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:53:10.433,tcp_client,server_stop_inactive,172.19.126.193,5000,,STOP,,OK latency injector stopped,(172.19.126.193:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:53:10.478,tcp_client,server_set_latency,172.19.123.40,5000,A,SET_LATENCY,80,OK latency set to 80 ms,(172.19.123.40:5000) [Team A] SET_LATENCY 80 -> OK latency set to 80 ms
+2026-04-08 15:53:10.479,tcp_client,server_set_latency,172.19.142.242,5000,A,SET_LATENCY,80,OK latency set to 80 ms,(172.19.142.242:5000) [Team A] SET_LATENCY 80 -> OK latency set to 80 ms
+2026-04-08 15:58:10.511,tcp_client,server_stop_inactive,172.19.123.40,5000,,STOP,,OK latency injector stopped,(172.19.123.40:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:58:10.511,tcp_client,server_stop_inactive,172.19.142.242,5000,,STOP,,OK latency injector stopped,(172.19.142.242:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 15:58:10.592,tcp_client,server_set_latency,172.19.126.193,5000,B,SET_LATENCY,80,OK latency set to 80 ms,(172.19.126.193:5000) [Team B] SET_LATENCY 80 -> OK latency set to 80 ms
+2026-04-08 15:58:10.592,tcp_client,server_set_latency,172.19.139.77,5000,B,SET_LATENCY,80,OK latency set to 80 ms,(172.19.139.77:5000) [Team B] SET_LATENCY 80 -> OK latency set to 80 ms
+2026-04-08 16:03:10.650,tcp_client,server_stop_inactive,172.19.126.193,5000,,STOP,,OK latency injector stopped,(172.19.126.193:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 16:03:10.650,tcp_client,server_stop_inactive,172.19.139.77,5000,,STOP,,OK latency injector stopped,(172.19.139.77:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 16:03:10.715,tcp_client,server_set_latency,172.19.123.40,5000,A,SET_LATENCY,100,OK latency set to 100 ms,(172.19.123.40:5000) [Team A] SET_LATENCY 100 -> OK latency set to 100 ms
+2026-04-08 16:03:10.715,tcp_client,server_set_latency,172.19.142.242,5000,A,SET_LATENCY,100,OK latency set to 100 ms,(172.19.142.242:5000) [Team A] SET_LATENCY 100 -> OK latency set to 100 ms
+2026-04-08 16:08:10.783,tcp_client,server_stop_inactive,172.19.123.40,5000,,STOP,,OK latency injector stopped,(172.19.123.40:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 16:08:10.783,tcp_client,server_stop_inactive,172.19.142.242,5000,,STOP,,OK latency injector stopped,(172.19.142.242:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 16:08:10.817,tcp_client,server_set_latency,172.19.139.77,5000,B,SET_LATENCY,100,OK latency set to 100 ms,(172.19.139.77:5000) [Team B] SET_LATENCY 100 -> OK latency set to 100 ms
+2026-04-08 16:08:10.819,tcp_client,server_set_latency,172.19.126.193,5000,B,SET_LATENCY,100,OK latency set to 100 ms,(172.19.126.193:5000) [Team B] SET_LATENCY 100 -> OK latency set to 100 ms
+2026-04-08 16:13:14.507,tcp_client,server_stop_inactive,172.19.126.193,5000,,STOP,,OK latency injector stopped,(172.19.126.193:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 16:13:14.508,tcp_client,server_stop_inactive,172.19.139.77,5000,,STOP,,OK latency injector stopped,(172.19.139.77:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 16:13:14.561,tcp_client,server_set_latency,172.19.123.40,5000,A,SET_LATENCY,20,OK latency set to 20 ms,(172.19.123.40:5000) [Team A] SET_LATENCY 20 -> OK latency set to 20 ms
+2026-04-08 16:13:14.563,tcp_client,server_set_latency,172.19.142.242,5000,A,SET_LATENCY,20,OK latency set to 20 ms,(172.19.142.242:5000) [Team A] SET_LATENCY 20 -> OK latency set to 20 ms
+2026-04-08 16:18:14.614,tcp_client,server_stop_inactive,172.19.123.40,5000,,STOP,,OK latency injector stopped,(172.19.123.40:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 16:18:14.619,tcp_client,server_stop_inactive,172.19.142.242,5000,,STOP,,OK latency injector stopped,(172.19.142.242:5000) STOP (inactive team) -> OK latency injector stopped
+2026-04-08 16:18:15.517,tcp_client,server_set_latency,172.19.126.193,5000,B,SET_LATENCY,20,OK latency set to 20 ms,(172.19.126.193:5000) [Team B] SET_LATENCY 20 -> OK latency set to 20 ms
+2026-04-08 16:18:15.518,tcp_client,server_set_latency,172.19.139.77,5000,B,SET_LATENCY,20,OK latency set to 20 ms,(172.19.139.77:5000) [Team B] SET_LATENCY 20 -> OK latency set to 20 ms
